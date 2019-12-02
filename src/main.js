@@ -22,7 +22,6 @@ async function copyTemplateFiles(options) {
 }
 
 async function createGulp(options) {
-  console.log(options)
     const targetPath = path.join(options.targetDirectory + '/' + options.slug, 'wpgulp.config.json');
     const content = config.gulp
     .replace('<projecturl>', options.slug + '.local')
@@ -34,7 +33,6 @@ async function createGulp(options) {
 async function renameFiles(options) {
   fs.rename(options.targetDirectory + '/' + options.slug + '/languages/wordpress-template-theme.pot' , options.targetDirectory  + '/' + options.slug + '/languages/' + options.slug + '.pot', function (err) {
     if (err) throw err;
-    console.log('File Renamed.');
   });
 }
 
@@ -65,8 +63,7 @@ async function replaceName(options) {
   };
 
   try {
-    const results = await replaceInFiles(replaceOptions)
-    console.log('Replacement results:', results);
+    await replaceInFiles(replaceOptions);
   }
   catch (error) {
     console.error('Error occurred:', error);
@@ -74,7 +71,6 @@ async function replaceName(options) {
 }
  
 export async function createProject(options) {
-  
   options = {
     ...options,
     targetDirectory: options.targetDirectory || process.cwd(),
@@ -133,9 +129,7 @@ export async function createProject(options) {
             cwd: options.targetDirectory,
           }),
         skip: () =>
-          !options.runInstall
-            ? 'Pass --install to automatically install dependencies'
-            : undefined,
+          !options.runInstall ? 'Pass --install to automatically install dependencies' : undefined,
       },
     ],
     {
@@ -146,11 +140,11 @@ export async function createProject(options) {
   await tasks.run();
   console.log('%s Theme ready', chalk.green.bold('DONE'));
   
-notifier.notify({
-  title: 'Theme Ready',
-  message: 'Your theme has been created in\n' + options.targetDirectory + '/' + options.slug,
-  wait: true,
-  sound: 'Pop',
-});
+  notifier.notify({
+    title: 'Theme Ready',
+    message: 'Your theme has been created in\n' + options.targetDirectory + '/' + options.slug,
+    icon: path.join(__dirname, 'icon.png'),
+    sound: 'Glass',
+  });
   return true;
 }
