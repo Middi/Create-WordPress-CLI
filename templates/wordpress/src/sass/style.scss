@@ -1,0 +1,24 @@
+/*=============================================
+=                 STYLESHEET                 =
+=============================================*/
+
+@import 'normalise';
+@import 'wordpress';
+@import 'colors';
+@import 'nav';
+@import 'typography';
+@import 'blog';
+@import 'cards';
+@import 'footer';
+
+html, body, main, #page {
+    height: 100%;
+    background-color: $white;
+}
+
+main { margin-top: 53px }
+
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+}

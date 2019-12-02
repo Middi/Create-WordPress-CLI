@@ -1,0 +1,154 @@
+/*=============================================
+=                  TYPOGRAPHY                 =
+=============================================*/
+
+html { font-size: 16px }
+
+h1, h2, h3, h4, h5, h6, label {
+    font-family: "Open Sans", sans-serif;
+    color: $black;
+    letter-spacing: 0;
+    font-weight: 700;
+    font-style: normal;
+    word-break: break-word;
+    word-wrap: break-word;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+h1 {
+    font-size: 2.2rem;
+    margin: 2.4rem 0 0.31rem 0;
+    line-height: 1.2em;
+}
+
+h2 {
+    font-size: 1.75rem;
+    margin: 2.4rem 0 0.31rem 0;
+}
+
+h3 {
+    font-size: 1.45rem;
+    margin: 2.4rem 0 -0.5rem 0;
+}
+
+h4 {
+    font-size: 1.25rem;
+    margin: 2.4rem 0 -0.7rem 0;
+}
+
+h5 {
+    font-size: 1rem;
+    margin: 2.4rem 0 -0.7rem 0;
+}
+
+h6 {
+    font-size: 0.8rem;
+    margin: 2.4rem 0 -0.7rem 0;
+}
+
+.h1-title {
+    font-size: 3rem;
+    display: inline;
+}
+
+.page-title {
+    padding: 20px;
+    text-align: center;
+}
+
+a { text-decoration: underline }
+
+p, a, li, textarea {
+    color: $black;
+    font-family: "Lora", serif;
+    font-size: 1.2rem;
+    letter-spacing: -0.003rem;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    line-height: 1.5;
+}
+
+p, a { margin: 1.4rem 0 0.4rem 0 }
+
+a:hover { color: lighten($black, 30) }
+
+strong { font-weight: 700 }
+
+em { font-style: italic }
+
+.small {
+    a {
+        font-family: "Open Sans", sans-serif;
+        color: lighten($black, 2);
+        font-size: 1rem;
+        text-decoration: none;
+        font-weight: 600;
+    }
+    font-size: 1rem;
+    color: lighten($black, 10);
+    margin: 0;
+    padding: 0;
+}
+
+li {
+    font-size: 1.25rem;
+    padding: 0;
+}
+
+blockquote {
+    margin: 2rem 3rem;
+    padding: 5px 40px 20px 40px;
+    text-align: left;
+    border-left: 3px solid $black;
+    p {
+        font-size: 1.35rem;
+        font-style: italic;
+    }
+
+    cite {
+        font-family: "Lora", serif;
+        color: $brand;
+    }
+}
+
+.text-center { text-align: center }
+
+small span {
+    font-size: 1rem;
+    line-height: 1;
+}
+
+pre {
+    white-space: pre-wrap;
+    word-break: break-word;
+    word-wrap: break-word;
+    hyphens: none;
+}
+
+@media all and (max-width: 720px) {
+    html {
+        font-size: 14px;
+    }
+}
+
+
+@media all and (max-width: 560px) {
+
+blockquote {
+    margin: 2rem 1.2rem 2rem 0.5rem;
+    padding: 10px 20px 10px 20px;
+    text-align: left;
+    border-left: 3px solid $brand;
+    p {
+        margin-top: 0;
+    }
+    
+}
+}
+@media all and (max-width: 450px) {
+    ol, ul { padding-left: 30px }
+ }
+ 

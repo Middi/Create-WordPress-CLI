@@ -1,0 +1,17 @@
+ ul {
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    margin: 0;
+}
+//--------------------------------
+// Removes webkit default styling
+//--------------------------------
+
+input, select {
+    -webkit-appearance: none;
+    -moz-appearance:    none;
+    appearance:         none;
+}
