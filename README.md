@@ -3,8 +3,8 @@
 ## Installation & Usage
 
 npm install -g
+
 create-theme
-```
 
 ## License
 
