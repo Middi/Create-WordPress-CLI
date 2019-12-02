@@ -143,12 +143,18 @@ export async function createProject(options) {
   
   notifier.notify({
     title: 'Theme Ready',
-    message: 'Your theme has been created in\n' + options.targetDirectory + '/' + options.slug,
+    subtitle: 'Your theme has been created in',
+    message: options.targetDirectory + '/' + options.slug,
     icon: path.join(__dirname, 'icon.png'),
     sound: 'Glass',
-  });
-
-  open(options.targetDirectory);
-
+    actions: 'Open Folder',
+    closeLabel: 'Cancel',
+    reply: false,
+    timeout: 10
+  },
+  function() {
+    open(options.targetDirectory);
+  }
+);
   return true;
 }
