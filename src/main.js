@@ -13,7 +13,7 @@ const access = promisify(fs.access);
 const writeFile = promisify(fs.writeFile);
 const copy = promisify(ncp);
 const replaceInFiles = require('replace-in-file');
-
+const notifier = require('node-notifier');
 
 async function copyTemplateFiles(options) {
   return copy(options.templateDirectory, options.targetDirectory + '/' + options.slug, {
@@ -27,8 +27,8 @@ async function createGulp(options) {
     const content = config.gulp
     .replace('<projecturl>', options.slug + '.local')
     .replace(/<slug>/g, options.slug);
-  
-   return writeFile(targetPath, content, 'utf8');
+   
+    return writeFile(targetPath, content, 'utf8');
 }
 
 async function renameFiles(options) {
@@ -38,13 +38,12 @@ async function renameFiles(options) {
   });
 }
 
-
 async function createCSS(options) {
     const targetPath = path.join(options.targetDirectory + '/' + options.slug, 'style.css');
     const content = config.style
     .replace('<themename>', options.themename);
   
-   return writeFile(targetPath, content, 'utf8');
+    return writeFile(targetPath, content, 'utf8');
 }
 
 async function initGit(options) {
@@ -74,8 +73,6 @@ async function replaceName(options) {
   }
 }
  
-
-
 export async function createProject(options) {
   
   options = {
@@ -88,18 +85,16 @@ export async function createProject(options) {
     underscore: slugify(options.themename.toLowerCase()).replace(/-/g, '_')
   };
 
-
   const templateDir = path.resolve(
     new URL(import.meta.url).pathname,
     '../../templates',
     options.template
   );
   options.templateDirectory = templateDir;
-
-  console.log(options);
   try {
     await access(templateDir, fs.constants.R_OK);
-  } catch (err) {
+  }
+  catch (err) {
     console.error('%s Invalid template name', chalk.red.bold('ERROR'));
     process.exit(1);
   }
@@ -148,8 +143,14 @@ export async function createProject(options) {
     }
   );
 
-
   await tasks.run();
-  console.log('%s Project ready', chalk.green.bold('DONE'));
+  console.log('%s Theme ready', chalk.green.bold('DONE'));
+  
+notifier.notify({
+  title: 'Theme Ready',
+  message: 'Your theme has been created in\n' + options.targetDirectory + '/' + options.slug,
+  wait: true,
+  sound: 'Pop',
+});
   return true;
 }
