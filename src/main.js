@@ -6,15 +6,15 @@ import ncp from 'ncp';
 import path from 'path';
 import { projectInstall } from 'pkg-install';
 import { promisify } from 'util';
+import slugify from 'slugify';
+import config from './config.json';
+import replaceInFiles from 'replace-in-file';
+import notifier from 'node-notifier';
+import open from 'open';
 
-const slugify = require('slugify');
-const config = require( './config.json' );
 const access = promisify(fs.access);
 const writeFile = promisify(fs.writeFile);
 const copy = promisify(ncp);
-const replaceInFiles = require('replace-in-file');
-const notifier = require('node-notifier');
-const open = require('open');
 
 async function copyTemplateFiles(options) {
   return copy(options.templateDirectory, options.targetDirectory + '/' + options.slug, {
@@ -96,8 +96,7 @@ export async function createProject(options) {
     process.exit(1);
   }
 
-  const tasks = new Listr(
-    [
+  const tasks = new Listr([
       {
         title: 'Copy project files',
         task: () => copyTemplateFiles(options),
@@ -131,8 +130,7 @@ export async function createProject(options) {
           }),
         skip: () =>
           !options.runInstall ? 'Pass --install to automatically install dependencies' : undefined,
-      },
-    ],
+      }],
     {
       exitOnError: false,
     }
