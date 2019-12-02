@@ -14,6 +14,7 @@ const writeFile = promisify(fs.writeFile);
 const copy = promisify(ncp);
 const replaceInFiles = require('replace-in-file');
 const notifier = require('node-notifier');
+const open = require('open');
 
 async function copyTemplateFiles(options) {
   return copy(options.templateDirectory, options.targetDirectory + '/' + options.slug, {
@@ -146,5 +147,8 @@ export async function createProject(options) {
     icon: path.join(__dirname, 'icon.png'),
     sound: 'Glass',
   });
+
+  open(options.targetDirectory);
+
   return true;
 }
