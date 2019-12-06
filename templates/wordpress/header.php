@@ -32,13 +32,13 @@
   <div class="container">
     <div id="logo" class="brand-header menuUp">
 
-<a href="<?php echo get_home_url(); ?>">
-      <img srcset="
-      <?php echo esc_url(get_stylesheet_directory_uri()); ?>/assets/img/nav-logo.png 196w,
-      <?php echo esc_url(get_stylesheet_directory_uri()); ?>/assets/img/nav-logo@2x.png 391w
-					"
-				src="<?php echo esc_url(get_stylesheet_directory_uri()); ?>/assets/img/nav-logo.png"  class="header-logo" alt="Header logo">
-</a>
+      <a href="<?php echo get_home_url(); ?>">
+        <img srcset="
+        <?php echo esc_url(get_stylesheet_directory_uri()); ?>/assets/img/nav-logo.png 273w,
+        <?php echo esc_url(get_stylesheet_directory_uri()); ?>/assets/img/nav-logo@2x.png 546w
+            "
+          src="<?php echo esc_url(get_stylesheet_directory_uri()); ?>/assets/img/nav-logo.png"  class="header-logo" alt="Header logo">
+      </a>
       
       <div id="nav-toggle">
         <div id="hamburger">
