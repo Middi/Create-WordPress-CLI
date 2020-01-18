@@ -122,15 +122,7 @@ export async function createProject(options) {
         title: 'Rename Filenames',
         task: () => renameFiles(options),
       },
-      {
-        title: 'Install dependencies',
-        task: () =>
-          projectInstall({
-            cwd: options.targetDirectory,
-          }),
-        skip: () =>
-          !options.runInstall ? 'Pass --install to automatically install dependencies' : undefined,
-      }],
+    ],
     {
       exitOnError: false,
     }

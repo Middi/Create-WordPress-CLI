@@ -8,11 +8,9 @@ function parseArgumentsIntoOptions(rawArgs) {
       '--themename': Boolean,
       '--git': Boolean,
       '--yes': Boolean,
-      '--install': Boolean,
       '-n': '--themename',
       '-g': '--git',
       '-y': '--yes',
-      '-i': '--install',
     },
     {
       argv: rawArgs.slice(2),
@@ -22,8 +20,7 @@ function parseArgumentsIntoOptions(rawArgs) {
     skipPrompts: args['--yes'] || false,
     themename: args['--themename'] || false,
     git: args['--git'] || false,
-    template: args._[0],
-    runInstall: args['--install'] || false,
+    template: args._[0]
   };
 }
 
