@@ -79,5 +79,3 @@ export async function cli(args) {
   options = await promptForMissingOptions(options);
   await createProject(options);
 }
-
-// ...
