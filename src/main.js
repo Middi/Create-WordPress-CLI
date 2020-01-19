@@ -16,38 +16,36 @@ const access = promisify(fs.access);
 const writeFile = promisify(fs.writeFile);
 const copy = promisify(ncp);
 
-async function copyTemplateFiles(options) {
-  return copy(options.templateDirectory, options.targetDirectory + '/' + options.slug, {
+async function copyTemplateFiles({targetDirectory, slug, templateDirectory}) {
+  return copy(templateDirectory, targetDirectory + '/' + slug, {
     clobber: false,
   });
 }
 
-async function createGulp(options) {
-    const targetPath = path.join(options.targetDirectory + '/' + options.slug, 'wpgulp.config.json');
+async function createGulp({targetDirectory, slug}) {
+    const path = targetDirectory + '/' + slug + '/wpgulp.config.json';
     const content = config.gulp
-    .replace('<projecturl>', options.slug + '.local')
-    .replace(/<slug>/g, options.slug);
-   
-    return writeFile(targetPath, content, 'utf8');
+      .replace('<projecturl>', slug + '.local')
+      .replace(/<slug>/g, slug);
+    return writeFile(path, content, 'utf8');
 }
 
-async function renameFiles(options) {
-  fs.rename(options.targetDirectory + '/' + options.slug + '/languages/wordpress-template-theme.pot' , options.targetDirectory  + '/' + options.slug + '/languages/' + options.slug + '.pot', function (err) {
+async function renameFiles({targetDirectory, slug}) {
+  fs.rename(targetDirectory + '/' + slug + '/languages/wordpress-template-theme.pot' , targetDirectory  + '/' + slug + '/languages/' + slug + '.pot', function (err) {
     if (err) throw err;
   });
 }
 
-async function createCSS(options) {
-    const targetPath = path.join(options.targetDirectory + '/' + options.slug, 'style.css');
+async function createCSS({targetDirectory, slug, themename}) {
+    const targetPath = path.join(targetDirectory + '/' + slug, 'style.css');
     const content = config.style
-    .replace('<themename>', options.themename);
-  
+    .replace('<themename>', themename);
     return writeFile(targetPath, content, 'utf8');
 }
 
-async function initGit(options) {
+async function initGit({targetDirectory, slug}) {
   const result = await execa('git', ['init'], {
-    cwd: options.targetDirectory + '/' + options.slug,
+    cwd: targetDirectory + '/' + slug,
   });
   if (result.failed) {
     return Promise.reject(new Error('Failed to initialize git'));
@@ -55,12 +53,15 @@ async function initGit(options) {
   return;
 }
 
-async function replaceName(options) {
-
+async function replaceName({targetDirectory, slug, underscore, themename}) {
   const replaceOptions = {
-    files: options.targetDirectory + '/' + options.slug + '/**/*',
-    from: [/wordpress_template_theme/g, /wordpress-template-theme/g, /wordpress template theme/g ],
-    to: [options.underscore, options.slug, options.themename],
+    files: targetDirectory + '/' + slug + '/**/*',
+    from: [
+      /wordpress_template_theme/g,
+      /wordpress-template-theme/g,
+      /wordpress template theme/g
+    ],
+    to: [underscore, slug, themename],
   };
 
   try {
