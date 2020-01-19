@@ -99,19 +99,19 @@ export async function createProject(options) {
 
   const tasks = new Listr([
       {
-        title: 'Copy project files',
+        title: 'Copying Project Files',
         task: () => copyTemplateFiles(options),
       },
       {
-        title: 'Create Gulp',
+        title: 'Creating Gulp File',
         task: () => createGulp(options),
       },
       {
-        title: 'Create CSS',
+        title: 'Creating CSS',
         task: () => createCSS(options),
       },
       {
-        title: 'Initialize git',
+        title: 'Initializing git',
         task: () => initGit(options),
         enabled: () => options.git,
       },
@@ -120,11 +120,11 @@ export async function createProject(options) {
         task: () => replaceName(options),
       },
       {
-        title: 'Rename Filenames',
+        title: 'Renaming Filenames',
         task: () => renameFiles(options),
       },
       {
-        title: 'Install dependencies',
+        title: 'Installing Dependencies',
         task: () =>
         projectInstall({
           cwd: options.targetDirectory + '/' + options.slug,
