@@ -122,7 +122,15 @@ export async function createProject(options) {
         title: 'Rename Filenames',
         task: () => renameFiles(options),
       },
-    ],
+      {
+        title: 'Install dependencies',
+        task: () =>
+        projectInstall({
+          cwd: options.targetDirectory + '/' + options.slug,
+        }),
+        skip: () =>
+          !options.runInstall ? 'Pass --install to automatically install dependencies' : undefined,
+      }],
     {
       exitOnError: false,
     }
@@ -140,7 +148,7 @@ export async function createProject(options) {
     actions: 'Open Folder',
     closeLabel: 'Cancel',
     reply: false,
-    timeout: 10
+    timeout: 1
   },
   function() {
     open(options.targetDirectory);

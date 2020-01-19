@@ -8,9 +8,11 @@ function parseArgumentsIntoOptions(rawArgs) {
       '--themename': Boolean,
       '--git': Boolean,
       '--yes': Boolean,
+      '--install': Boolean,
       '-n': '--themename',
       '-g': '--git',
       '-y': '--yes',
+      '-i': '--install',
     },
     {
       argv: rawArgs.slice(2),
@@ -20,7 +22,8 @@ function parseArgumentsIntoOptions(rawArgs) {
     skipPrompts: args['--yes'] || false,
     themename: args['--themename'] || false,
     git: args['--git'] || false,
-    template: args._[0]
+    template: args._[0],
+    runInstall: args['--install'] || false,
   };
 }
 
@@ -62,12 +65,23 @@ async function promptForMissingOptions(options) {
     });
   }
 
+
+  if (!options.git) {
+    questions.push({
+      type: 'confirm',
+      name: 'runInstall',
+      message: 'Install Dependencies?',
+      default: false,
+    });
+  }
+
   const answers = await inquirer.prompt(questions);
   return {
     ...options,
     template: options.template || answers.template,
     git: options.git || answers.git,
     themename: options.themename || answers.themename,
+    runInstall: options.runInstall || answers.runInstall,
   };
 }
 
